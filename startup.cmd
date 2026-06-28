@@ -21,7 +21,7 @@ echo "Line Edit using concurrent API completed."
 python scripts/Parse_edit.py
 python scripts/merge_edit.py
 echo "Generation of final documents"
-/scripts/makeworddoc.sh 04Edit/LineEdited.md 04Edit/LineEdited.docx
+call /scripts/makeworddoc.sh 04Edit/LineEdited.md 04Edit/LineEdited.docx
 copy 04Edit/LineEdited.docx LineEdited.docx
 copy 02Translate/log.txt 02Log.txt
 copy 03Check/log.txt 03Log.txt
