@@ -6,7 +6,7 @@
 #
 #           manage multiple concurrent AI prompts
 #            'concur'  tasks are launched per cycle
-#            repeated for 'cycles' cycles witha 60 sec pause between cycles.
+#            repeated for 'cycles' cycles with a 60 sec pause between cycles.
 #            prompts are fetched from <source>n.txt and responses sent to <target>n.txt
 #            where n is an integer up to 100
 #
@@ -125,7 +125,7 @@ def get_next_unexecuted_files(m: int, directory: str = ".") -> list:
 async def submit_prompt(sysfile,userfile,outfile,model):
     # Assemble style guide and task definition
     with open(sysfile,'r') as f:
-        SYSTEM_INSTRUCTIONS = f.read()  # style guide
+        SYSTEM_INSTRUCTIONS = f.read()  # any common instructions
 
     with open(userfile,'r') as f:
         USER_INSTRUCTIONS = f.read()    # specific task
@@ -188,7 +188,7 @@ for it in range(cycles):
     model = MODELS_TO_USE[modelnumber]
     if len(userfile) != 0:
         asyncio.run(main())
-        time.sleep(60)
+        time.sleep(40)  
     
 print(f"Completed AI tasks")
 

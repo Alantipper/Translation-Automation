@@ -6,7 +6,7 @@ def read_file_to_list(file_path):
             lines = file.read().splitlines()
         return lines
     except FileNotFoundError:
-        return "Error: The file was not found."
+        print(f"Error: The file {file_path} was not found.")
 
 def split_into_chapters(lines, delimiter="# "):
     chapters = []

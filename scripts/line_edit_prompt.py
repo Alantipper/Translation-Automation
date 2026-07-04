@@ -26,13 +26,14 @@ fr_content = read_file_to_list(FRfile)
 chapter = split_into_chapters(fr_content)
 nch = len(chapter) # no of chapters found
 print(f"{nch} chapters ready for line edit")
+file_content = read_file_to_list(msfile)
+fr_content = read_file_to_list(FRfile)
+chapter = split_into_chapters(file_content)
+FRchapter = split_into_chapters(fr_content)
+template = read_file_to_list(template_file)
+style_list= read_file_to_list(style_file)
 for i in range(nch):
-    file_content = read_file_to_list(msfile)
-    fr_content = read_file_to_list(FRfile)
-    chapter = split_into_chapters(file_content)
-    FRchapter = split_into_chapters(fr_content)
-    template = read_file_to_list(template_file)
-    style_list= read_file_to_list(style_file)
+    
     prompt = merge_chapter_files2(template, style_list,key="PROJECT STYLE SHEET")
     prompt = merge_chapter_files2(prompt, FRchapter[i],key="<CHAPTER START>",OCC=1)
 

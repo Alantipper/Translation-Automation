@@ -24,15 +24,12 @@ file_content = read_file_to_list(msfile)
 chapter = split_into_chapters(file_content)
 nch = len(chapter) # no of chapters found
 print(f"{nch} Chapters found")
+template = read_file_to_list(template_file)
+style_list= read_file_to_list(style_file)
 
 for i in range(nch): # iterate over all of the chapters
-    template = read_file_to_list(template_file)
-    style_list= read_file_to_list(style_file)
-    prompt = merge_chapter_files(template, style_list,key="PROJECT STYLE SHEET")
-
-    file_content = read_file_to_list(msfile)
-    chapter = split_into_chapters(file_content)
     
+    prompt = merge_chapter_files(template, style_list,key="PROJECT STYLE SHEET")
     prompt = merge_chapter_files(prompt, chapter[i],key="<CHAPTER START>")
     list_to_text_file(prompt, prompt_prefix +str(i+1)+'.txt')
     print(f"{prompt_prefix +str(i+1)+'.txt'} generated")

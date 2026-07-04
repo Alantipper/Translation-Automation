@@ -27,7 +27,7 @@ else:
     # (glob matches files; we use lower case, but it's case-insensitive on Windows)
     md_files = list(target_dir.glob("*.md"))
     
-    # Verify that there is exactly one markdown file add add its name to the xml index
+    # Verify that there is exactly one markdown file add add its name to the json index
     if len(md_files) == 1:
         markdown_filename= md_files[0]
         print(f"Success! Found exactly one Markdown file: '{markdown_filename.name}'")
