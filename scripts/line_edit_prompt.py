@@ -14,11 +14,11 @@ globals().update(config)
 #### parameters
 
 msfile = config["msfile"]
-template_file = config["04_template_file"]
+template_file = config["_04_template_file"]
 style_file = config["style_file"]
-prompt_prefix = config["04_prompt_prefix"]
+prompt_prefix = config["_04_prompt_prefix"]
 
-FRfile =config["03DESTINATION"]
+FRfile =config["_03DESTINATION"]
 
 
 file_content = read_file_to_list(msfile)

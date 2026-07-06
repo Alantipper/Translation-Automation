@@ -14,10 +14,10 @@ globals().update(config)
 #### parameters
 
 msfile = config["msfile"]
-template_file = config["03_template_file"]
+template_file = config["_03_template_file"]
 style_file = config["style_file"]
-prompt_prefix = config["03_prompt_prefix"]
-FRfile =config["02DESTINATION"]
+prompt_prefix = config["_03_prompt_prefix"]
+FRfile =config["_02DESTINATION"]
 
 file_content = read_file_to_list(msfile)
 chapter = split_into_chapters(file_content)

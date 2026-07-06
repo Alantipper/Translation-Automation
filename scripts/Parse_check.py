@@ -16,20 +16,20 @@ globals().update(config)
 #### parameters
 
 msfile = config["msfile"]
-template_file = config["04_template_file"]
+template_file = config["_04_template_file"]
 style_file = config["style_file"]
-prompt_prefix = config["04_prompt_prefix"]
+prompt_prefix = config["_04_prompt_prefix"]
 
-FRfile =config["03_chapter"]
+FRfile =config["_03_chapter"]
 ############### main Prog ####################################
-logfile = config["03logfile"]
+logfile = config["_03logfile"]
 ch = config["chcount"]
 infile = []
 outfile = []
 outname = []
 for i in range(ch):
-   infile.append(f"{config['03_response']}{i+1}.txt")
-   outfile.append(f"{config['03_chapter']}{i+1}.md")                            
+   infile.append(f"{config['_03_response']}{i+1}.txt")
+   outfile.append(f"{config['_03_chapter']}{i+1}.md")                            
    outname.append(f"\nChapter {i+1}\n")
 
 

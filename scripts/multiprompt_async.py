@@ -15,8 +15,8 @@
 ##################################################################
 
 import sys
-from google import genai
-from google.genai import types
+#from google import genai
+#from google.genai import types
 import os
 from dotenv import load_dotenv
 from litellm import acompletion
@@ -124,12 +124,18 @@ def get_next_unexecuted_files(m: int, directory: str = ".") -> list:
 ############### co-function to run one instance of AI prompt ####################################
 async def submit_prompt(sysfile,userfile,outfile,model):
     # Assemble style guide and task definition
-    with open(sysfile,'r') as f:
-        SYSTEM_INSTRUCTIONS = f.read()  # any common instructions
-
-    with open(userfile,'r') as f:
-        USER_INSTRUCTIONS = f.read()    # specific task
-        
+    try:
+        with open(sysfile,'r',encoding="utf-8") as f:
+          SYSTEM_INSTRUCTIONS = f.read()  # any common instructions
+    except:
+        print(f"Can't open system prompt file {sysfile}")        
+    try:
+        with open(userfile,'r',encoding="utf-8") as f:
+          USER_INSTRUCTIONS = f.read()    # specific task
+    except:
+        print(f"Can't open user prompt file {userfile}")
+        print(f"Current working directory is { os.getcwd()}")       
+          
     
     print(f"🤖 Running model: {model}...") # define model
 
@@ -153,7 +159,7 @@ async def submit_prompt(sysfile,userfile,outfile,model):
 ##        # Add notes to the log file    
 ##        with open(logfile,'a') as f:
 ##            f.write(str(outname + get_text_after_second_marker(output)))    
-        with open(outfile,'w') as f:
+        with open(outfile,'w',encoding="utf-8") as f:
              f.write(str(output))
              
         #print(f"✨ Result from {model}:\n{output}\n")
@@ -168,7 +174,14 @@ async def main():
     async with asyncio.TaskGroup() as tg:
       for i in range(len(userfile)):
         print(f"Starting task input = {userfile[i]}  output = {outfile[i]}")
-        results = tg.create_task(submit_prompt(sysfile,folder+'/'+userfile[i],folder+'/'+outfile[i],model))
+        print(f"Folder = {folder}")
+        ifile =folder+"/"+userfile[i]
+        ofile = folder+"/"+outfile[i]
+        print(f"Full input file = {ifile}")
+        print(f"Full output file = {ofile}")
+        print(f"Model = {model}")
+        
+        results = tg.create_task(submit_prompt(sysfile,folder+"/"+userfile[i],folder+"/"+outfile[i],model))
       
     mins = (time.time()-start_time)/60
     print(f"Total execution time {time.time()-start_time:.2f} seconds")

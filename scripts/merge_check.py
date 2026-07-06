@@ -7,14 +7,14 @@ globals().update(config)
 #### parameters
 
 msfile = config["msfile"]
-template_file = config["04_template_file"]
+template_file = config["_04_template_file"]
 style_file = config["style_file"]
-prompt_prefix = config["04_prompt_prefix"]
+prompt_prefix = config["_04_prompt_prefix"]
 # ================= CONFIGURATION =================
 # Change these two variables to fit your needs:
-FILE_PREFIX = config["03FILE_PREFIX"]  # The part before the number (e.g., "chapter_")
-folder = config["03folder"] 
-DESTINATION = config["03DESTINATION"]  # The name of the resulting file
+FILE_PREFIX = config["_03FILE_PREFIX"]  # The part before the number (e.g., "chapter_")
+folder = config["_03folder"] 
+DESTINATION = config["_03DESTINATION"]  # The name of the resulting file
 # =================================================
 
 

@@ -7,14 +7,14 @@ globals().update(config)
 #### parameters
 
 msfile = config["msfile"]
-template_file = config["04_template_file"]
+template_file = config["_04_template_file"]
 style_file = config["style_file"]
-prompt_prefix = config["04_prompt_prefix"]
+prompt_prefix = config["_04_prompt_prefix"]
 # ================= CONFIGURATION =================
 # Change these two variables to fit your needs:
-FILE_PREFIX = config["02FILE_PREFIX"]  # The part before the number (e.g., "chapter_")
-folder = config["02folder"] 
-DESTINATION = config["02DESTINATION"]  # The name of the resulting file
+FILE_PREFIX = config["_02FILE_PREFIX"]  # The part before the number (e.g., "chapter_")
+folder = config["_02folder"] 
+DESTINATION = config["_02DESTINATION"]  # The name of the resulting file
 # =================================================
 
 def natural_sort_key(s):
