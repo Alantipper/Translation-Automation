@@ -2,6 +2,7 @@
     "msfile": "manuscript/Novella.md",
     "chcount": 3,
     "modelnumber": 2,
+    "_01_template_file": "scripts/Styleguide_template.txt",
     "_02_template_file": "scripts/Translation_template.txt",
     "style_file": "01Style/styleguide.txt",
     "_02_prompt_prefix": "02Translate/translate_prompt_file_ch",
