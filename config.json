@@ -27,5 +27,7 @@
     "_04_chapter": "04Edit/edited_ch",
     "_04FILE_PREFIX": "edited_ch",
     "_04folder": "04Edit/",
-    "_04DESTINATION": "04Edit/LineEdited.md"
+    "_04DESTINATION": "04Edit/LineEdited.md",
+    "_05_template_file": "scripts/WholeDoc_template.txt",
+    "_05DESTINATION": "WholeDocReport.txt"
 }
