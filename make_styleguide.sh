@@ -5,7 +5,7 @@ format_time() {
   ((s=${1}%60))
   printf "%02d:%02d:%02d\n" $h $m $s
  }
-
+python scripts/Check_manuscript.py
 python scripts/generate_style_guide.py
 
 echo "Completed in $(format_time $SECONDS)"
