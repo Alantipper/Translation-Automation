@@ -8,8 +8,8 @@ This program is free software: you can redistribute it and/or modify
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-Install python from www.python.org and its libraries lighllm and dotenv
-(use "pip install lightllm" and "pip install dotenv" at the command prompt)
+Install python from www.python.org and its libraries litellm and dotenv
+(use "pip install litellm" and "pip install dotenv" at the command prompt)
 Install pandoc from www.pandoc.org
 
 Add the manuscript to be translated to the "manuscript" directory.
@@ -31,7 +31,7 @@ For example python scripts/multiprompt_async.py "translate_prompt_file_ch" "AI_r
 The fist number (3) is the number of concurrent chapters to submit and the second (1) is the number of times to cycle the submission requests, The product of these two numbers should be greater than the number of chapters. We have sucessfully used concurrency of 6 or 13 with moderate rate limits.
 There are three instances of these lines to be tuned.
 
-Run the command file "startup.sh" (Linux) or "startuo.cmd" (Windows)
+Run the command file "startup.sh" (Linux) or "startup.cmd" (Windows)
 That will run through all of the passes of the translation and copy the final word document to the top level directory.
 
 If you want to rerun the translation just delete the contents of 02Translate,03Check and 04Edit and rerun the command file.
