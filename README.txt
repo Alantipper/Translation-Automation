@@ -36,3 +36,8 @@ That will run through all of the passes of the translation and copy the final wo
 
 If you want to rerun the translation just delete the contents of 02Translate,03Check and 04Edit and rerun the command file.
 
+Caching
+
+  To implement prompt caching as an experiment I have included startup_cache.sh,translate_cache_prompt.py,acc_check_cache_prompt.py,line_edit_cache_prompt.py and multiprompt_async_cache.py - the original files are unchanged and can still be used.
+  The method combines template and style guide into system instructions and then tags them for caching as they dont change between chapters. The source text chapters are still loaded as user instructions as before.
+   
