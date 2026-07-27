@@ -8,15 +8,13 @@
 #            'concur'  tasks are launched per cycle
 #            repeated for 'cycles' cycles with a 60 sec pause between cycles.
 #            prompts are fetched from <source>n.txt and responses sent to <target>n.txt
-#            where n is an integer up to 100
+#            where n is an integer up to 500
 #
 #             The next 'concur' tasks are run from source files without matching target files.
 #              ANTHROPIC_API_KEY must be assigned in a .env file in the current working directory
 ##################################################################
 
 import sys
-#from google import genai
-#from google.genai import types
 import os
 from dotenv import load_dotenv
 from litellm import acompletion
@@ -130,14 +128,15 @@ async def submit_prompt(sysfile,userfile,outfile,model):
         with open(sysfile,'r',encoding="utf-8") as f:
           SYSTEM_INSTRUCTIONS = f.read()  # any common instructions
     except:
-        print(f"Can't open system prompt file {sysfile}")        
+        print(f"Can't open system prompt file {sysfile}")
+        sys.exit(3)
     try:
         with open(userfile,'r',encoding="utf-8") as f:
           USER_INSTRUCTIONS = f.read()    # specific task
     except:
         print(f"Can't open user prompt file {userfile}")
         print(f"Current working directory is { os.getcwd()}")       
-          
+        sys.exit(4)
     
     print(f"🤖 Running model: {model}...") # define model
 
@@ -181,6 +180,7 @@ async def submit_prompt(sysfile,userfile,outfile,model):
         
     except Exception as e:
       print(f"❌ Failed to run {model}. Error: {e}\n{'-'*50}\n")
+      sys.exit(2)
 ################### Main ###################################
 async def main():
     start_time = time.time()
@@ -194,9 +194,11 @@ async def main():
         print(f"Full input file = {ifile}")
         print(f"Full output file = {ofile}")
         print(f"Model = {model}")
-        
-        results = tg.create_task(submit_prompt(sysfile,folder+"/"+userfile[i],folder+"/"+outfile[i],model))
-      
+        try:
+           results = tg.create_task(submit_prompt(sysfile,folder+"/"+userfile[i],folder+"/"+outfile[i],model))
+        except:
+            print(f"Unable to create asynchronous task for {ifile}")
+            sys.exit(1)
     mins = (time.time()-start_time)/60
     print(f"Total execution time {time.time()-start_time:.2f} seconds")
 
@@ -216,6 +218,8 @@ for it in range(cycles):
     if len(userfile) != 0:
         asyncio.run(main())
         time.sleep(40)  
-    
-print(f"Completed AI tasks")
+    else:
+        print(f"No more tasks to submit")
+        sys.exit(0)
+
 

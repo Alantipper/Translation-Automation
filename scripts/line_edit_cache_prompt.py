@@ -7,6 +7,7 @@ Created on Fri Mar 27 06:49:09 2026
 """
 from translate_lib import *
 import json
+import sys
 
 # load the configuration settings
 with open("config.json", mode="r", encoding="utf-8") as read_file: config = json.load(read_file)
@@ -20,27 +21,33 @@ prompt_prefix = config["_04_prompt_prefix"]
 
 FRfile =config["_03DESTINATION"]
 
+try:
+    file_content = read_file_to_list(msfile)
+    fr_content = read_file_to_list(FRfile)
+    chapter = split_into_chapters(fr_content)
+    nch = len(chapter) # no of chapters found
+    print(f"{nch} chapters ready for line edit")
+    file_content = read_file_to_list(msfile)
+    fr_content = read_file_to_list(FRfile)
+    chapter = split_into_chapters(file_content)
+    FRchapter = split_into_chapters(fr_content)
+    template = read_file_to_list(template_file)
+    style_list= read_file_to_list(style_file)
+    prompt = merge_chapter_files(template, style_list,key="PROJECT STYLE SHEET")
+    list_to_text_file(prompt, 'sys.txt') # save the template and style guide for caching
+except:
+    print(f"Unable to read and split files for line edit")
+    sys.exit(1)
+try:          
+    header = ["use the system instructions on the attached CHAPTER\n","<CHAPTER START>"]
+    for i in range(nch):
+        
+       
+        prompt = merge_chapter_files2(header, FRchapter[i],key="<CHAPTER START>",OCC=1)
 
-file_content = read_file_to_list(msfile)
-fr_content = read_file_to_list(FRfile)
-chapter = split_into_chapters(fr_content)
-nch = len(chapter) # no of chapters found
-print(f"{nch} chapters ready for line edit")
-file_content = read_file_to_list(msfile)
-fr_content = read_file_to_list(FRfile)
-chapter = split_into_chapters(file_content)
-FRchapter = split_into_chapters(fr_content)
-template = read_file_to_list(template_file)
-style_list= read_file_to_list(style_file)
-prompt = merge_chapter_files(template, style_list,key="PROJECT STYLE SHEET")
-list_to_text_file(prompt, 'sys.txt') # save the template and style guide for caching
-
-header = ["use the system instructions on the attached CHAPTER\n","<CHAPTER START>"]
-for i in range(nch):
-    
-   
-    prompt = merge_chapter_files2(header, FRchapter[i],key="<CHAPTER START>",OCC=1)
-
-    list_to_text_file(prompt, prompt_prefix+str(i+1)+'.txt')
-    print(f"{prompt_prefix+str(i+1)+'.txt'} created")
-
+        list_to_text_file(prompt, prompt_prefix+str(i+1)+'.txt')
+        print(f"{prompt_prefix+str(i+1)+'.txt'} created")
+except:
+    print(f"Unable to generate line edit prompts")
+    sys.exit(2)
+sys.exit(0)    

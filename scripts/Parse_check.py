@@ -6,6 +6,7 @@
 
 
 import os
+import sys
 from time import time
 from translate_lib import *
 import json
@@ -22,29 +23,33 @@ prompt_prefix = config["_04_prompt_prefix"]
 
 FRfile =config["_03_chapter"]
 ############### main Prog ####################################
-logfile = config["_03logfile"]
-ch = config["chcount"]
-infile = []
-outfile = []
-outname = []
-for i in range(ch):
-   infile.append(f"{config['_03_response']}{i+1}.txt")
-   outfile.append(f"{config['_03_chapter']}{i+1}.md")                            
-   outname.append(f"\nChapter {i+1}\n")
+try:
+   logfile = config["_03logfile"]
+   ch = config["chcount"]
+   infile = []
+   outfile = []
+   outname = []
+   for i in range(ch):
+      infile.append(f"{config['_03_response']}{i+1}.txt")
+      outfile.append(f"{config['_03_chapter']}{i+1}.md")                            
+      outname.append(f"\nChapter {i+1}\n")
 
 
-   
-for fileio in range(ch):
-    
-   with open(infile[fileio],'r') as f:
-        output = f.read()
+      
+   for fileio in range(ch):
+       
+      with open(infile[fileio],'r') as f:
+           output = f.read()
 
-    # store fenced code block in the output file
-   with open(outfile[fileio],'w') as f:
-         f.write(str(extract_text_block(output)))
-    # Add notes to the log file    
-   with open(logfile,'a') as f:
-        f.write(str(outname[fileio] + get_text_after_second_marker(output)))    
-    
-print("All files parsed and log created")  
-    
+       # store fenced code block in the output file
+      with open(outfile[fileio],'w') as f:
+            f.write(str(extract_text_block(output)))
+       # Add notes to the log file    
+      with open(logfile,'a') as f:
+           f.write(str(outname[fileio] + get_text_after_second_marker(output)))    
+       
+   print("All files parsed and log created")  
+except:
+   print(f"Unable to parse the files")
+   sys.exit(1)
+sys.exit(0)

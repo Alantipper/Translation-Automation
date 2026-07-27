@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import json
 # load the configuration settings
@@ -52,8 +53,10 @@ def main():
         print(f"\nDone! File created at: {os.path.abspath(DESTINATION)}")
         
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"An error occurred merging the files: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
+sys.exit(0)
 

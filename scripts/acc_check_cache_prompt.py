@@ -7,6 +7,7 @@ Created on Fri Mar 27 06:49:09 2026
 """
 from translate_lib import *
 import json
+import sys
 
 # load the configuration settings
 with open("config.json", mode="r", encoding="utf-8") as read_file: config = json.load(read_file)
@@ -19,15 +20,18 @@ style_file = config["style_file"]
 prompt_prefix = config["_03_prompt_prefix"]
 FRfile =config["_02DESTINATION"]
 
-file_content = read_file_to_list(msfile)
-chapter = split_into_chapters(file_content)
-nchs= len(chapter) # no of source chapters found
-fr_content = read_file_to_list(FRfile)
-chapter = split_into_chapters(fr_content)
-nch = len(chapter) # no of target chapters found
+try:
+    file_content = read_file_to_list(msfile)
+    chapter = split_into_chapters(file_content)
+    nchs= len(chapter) # no of source chapters found
+    fr_content = read_file_to_list(FRfile)
+    chapter = split_into_chapters(fr_content)
+    nch = len(chapter) # no of target chapters found
 
-print(f"{nch} translated chapters  {nchs} source chapters")
-
+    print(f"{nch} translated chapters  {nchs} source chapters")
+except:
+    print(f"Unable to open and split input files")
+    sys.exit(1)
 
 if nchs == nch:
     
@@ -39,14 +43,17 @@ if nchs == nch:
     list_to_text_file(prompt, 'sys.txt') # save the template and style guide for caching
 
     header = ["use the system instructions on the attached CHAPTER\n","<CHAPTER START>"]
-    
-    for i in range(nch):
-       
-        prompt = merge_chapter_files2(header, chapter[i],key="<CHAPTER START>",OCC=1)
-        prompt.append("<CHAPTER START>\n")
-        prompt = merge_chapter_files2(prompt, FRchapter[i],key="<CHAPTER START>",OCC=2)
-        list_to_text_file(prompt, prompt_prefix+str(i+1)+'.txt')
-
+    try:
+        for i in range(nch):
+           
+            prompt = merge_chapter_files2(header, chapter[i],key="<CHAPTER START>",OCC=1)
+            prompt.append("<CHAPTER START>\n")
+            prompt = merge_chapter_files2(prompt, FRchapter[i],key="<CHAPTER START>",OCC=2)
+            list_to_text_file(prompt, prompt_prefix+str(i+1)+'.txt')
+    except:
+         print(f"Unable to create prompt files")
+         sys.exit(3)
 else:
     print(f" No of source and target chapters do not match in Acc Check stage")
-    
+    sys.exit(2)
+sys.exit(0)    
